@@ -16,12 +16,17 @@ def get_lat_long(response):
 
 
 # Get state and city input from user
-state = input("Enter State: ")
+country = input("Enter Country: ")
+
+state = ""
+if country == 'US':
+    state = input("Enter State: ")
+
 city = input("Enter City: ")
 
 # Request to get location
 geo_url = "http://api.openweathermap.org/geo/1.0/direct?q="
-geo_url += city + "," + state + ",US&limit=5&appid=" + API_KEY
+geo_url += city + "," + state + "," + country + "&limit=5&appid=" + API_KEY
 geo_response = requests.get(geo_url).json()
 
 # If location was found
@@ -41,16 +46,23 @@ if len(geo_response) > 0:
     temp = weather_response['main']['temp']
     temp = str('{:.2f}'.format(temp))
 
-    feels_like = weather_response['main']['feels_like']
-    feels_like = str('{:.2f}'.format(feels_like))
+    high = weather_response['main']['temp_max']
+    high = str('{:.2f}'.format(high))
+
+    low = weather_response['main']['temp_min']
+    low = str('{:.2f}'.format(low))
 
     weather = weather_response['weather'][0]['main']
 
-    print("\n" + city + ", " + state + " Results:")
+    if state != "":
+        print("\n" + city + ", " + state + " Results:")
+    else:
+        print("\n" + city + ", " + country + " Results:")
     print("Temperature: " + temp + " F")
-    print("Feels Like: " + feels_like + " F")
+    print("High: " + high + " F")
+    print("Low: " + low + " F")
     print("Weather: " + weather)
 
 else:
     # If geo request has no body
-    print("Location not found")
+    print("\nLocation not found")
