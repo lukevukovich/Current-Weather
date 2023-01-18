@@ -1,5 +1,5 @@
 # Current-Weather
-Input country, state (if US), and city. Will output weather/temp results if location is found.
+weather_lookup.py: Input city, country, and state (if US). Displays weather info if location is found.
 
-To do list:
-* Create GUI to neatly display weather query information
+your_weather.py: Retrieves user location and displays current weather info.
+
